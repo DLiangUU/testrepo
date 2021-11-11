@@ -14,38 +14,30 @@ library(litsearchr)
 library(lintr)
 packageVersion("litsearchr")
 
+#fahrenheit_to_celsius <- function(temp_F) {
+#  temp_C <- (temp_F - 32) * 5 / 9
+#  return(temp_C)
+#}
 
-naive_results <- import_results(file = "./data/raw/DynTreatReg.bib")
-nrow(naive_results)
-colnames(naive_results)
-naive_results[1, "title"]
-# Two ways of generating keywords#
-# First way
-naive_results[1, "keywords"]
-# This show the ones that already contains keywords
-sum(is.na(naive_results[, "keywords"]))
-# This is extracting keywords in the keywords field in the articles
-extract_terms(keywords = naive_results[, "keywords"], method = "tagged")
-?extract_terms
+naive_results <- import_results(file = datasetlist)
 
-keywords <- extract_terms(keywords = naive_results[, "keywords"],
-                          method = "tagged", min_n = 2)
+GenerateKeywords <- function(x) {
+   keywords <- extract_terms(keywords = x[, "keywords"],
+                            method = "tagged", min_n = 2)
+  extract_terms(text = x[, "title"], method = "fakerake",
+                min_freq = 3, min_n = 2)
+  title_terms <- extract_terms(
+    text = x[, "title"],
+    method = "fakerake",
+    min_freq = 3, min_n = 2
+  )
+  terms <- unique(c(keywords, title_terms))
+  print("These are the generated keywords and terms:")
+  return(terms)
+}
 
-keywords
+GenerateKeywords(naive_results)
 
-# Another way is to use the RAKE methodology.
-extract_terms(text = naive_results[, "title"], method = "fakerake",
-              min_freq = 3, min_n = 2)
-
-title_terms <- extract_terms(
-  text = naive_results[, "title"],
-  method = "fakerake",
-  min_freq = 3, min_n = 2
-)
-
-title_terms
-
-terms <- unique(c(keywords, title_terms))
 
 # You can also use network analysis to identify keywords
 # First combine all abstracts to 1 file
@@ -110,7 +102,7 @@ selected_terms
 
 # It is suggested to group the terms into groups
 grouped_terms <- list(
-  DynamicTreatment = selected_terms[c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)] 
+  DynamicTreatment = selected_terms[c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)]
 )
 grouped_terms
 
