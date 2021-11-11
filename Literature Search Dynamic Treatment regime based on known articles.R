@@ -21,13 +21,13 @@ packageVersion("litsearchr")
 
 naive_results <- import_results(file = datasetlist)
 
-GenerateKeywords <- function(x) {
-   keywords <- extract_terms(keywords = x[, "keywords"],
+GenerateKeywords <- function(Datafile) {
+   keywords <- extract_terms(keywords = Datafile[, "keywords"],
                             method = "tagged", min_n = 2)
-  extract_terms(text = x[, "title"], method = "fakerake",
+  extract_terms(text = Datafile[, "title"], method = "fakerake",
                 min_freq = 3, min_n = 2)
   title_terms <- extract_terms(
-    text = x[, "title"],
+    text = Datafile[, "title"],
     method = "fakerake",
     min_freq = 3, min_n = 2
   )
