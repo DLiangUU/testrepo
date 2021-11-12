@@ -1,5 +1,14 @@
-# testrepo
-## Project organization
+# Test Project - Finding keywords
+## Overview
+This test project is to generate keywords for a systematic review search. The code is based on the R Package Litsearchr.
+It is based on initially performing a naive search for articles and then followingly applying a
+Rapid Automatic Keyword Extraction Algorithm to search for additional keywords in the articles from the naive search.
+
+The previous code has been rewritten into functions for easier general reproduction.
+
+## Installation
+
+
 - PG = project-generated
 - HW = human-writable
 - RO = read only

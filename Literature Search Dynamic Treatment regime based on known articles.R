@@ -2,6 +2,7 @@
 
 install.packages("lintr")
 install.packages("styler")
+install.packages("docstring")
 
 library(tidyverse)
 library(dplyr)
@@ -12,15 +13,26 @@ library(readr)
 library(devtools)
 library(litsearchr)
 library(lintr)
+library(docstring)
 packageVersion("litsearchr")
 
 
-#Function for generating the initial keywords
+# Function for generating the initial keywords
 GenerateKeywords <- function(Datafile) {
-   keywords <- extract_terms(keywords = Datafile[, "keywords"],
-                            method = "tagged", min_n = 2)
-  extract_terms(text = Datafile[, "title"], method = "fakerake",
-                min_freq = 3, min_n = 2)
+  #'@title Keyword Generator
+  #'@description This function will extract the keywords provided by 
+  #'author as well as generate keywords based on
+  #'Rapid Automatic Keyword Extraction Algorithm
+  #'@param Datafile The name of the dataset imported
+  #'@return Returns the generated keywords
+  keywords <- extract_terms(
+    keywords = Datafile[, "keywords"],
+    method = "tagged", min_n = 2
+  )
+  extract_terms(
+    text = Datafile[, "title"], method = "fakerake",
+    min_freq = 3, min_n = 2
+  )
   title_terms <- extract_terms(
     text = Datafile[, "title"],
     method = "fakerake",
@@ -30,17 +42,17 @@ GenerateKeywords <- function(Datafile) {
   print("These are the generated keywords and terms:")
   return(terms)
 }
+?GenerateKeywords
 
 GenerateGraphNetwork <- function(Datafile) {
-  # You can also use network analysis to identify keywords
-  # First combine all abstracts to 1 file
+  #All abstracts needs to be combined in single file
   docs <- paste(Datafile[, "title"], Datafile[, "abstract"])
-   # Now we create a matrix with the records
+  #A matrix with the records should be created
   dfm <- create_dfm(elements = docs, features = terms)
   dfm[1:3, 1:4]
   g <- create_network(dfm, min_studies = 3)
-  
-  # Graphing it
+
+  # Graphing to see relatedness
   ggraph(g, layout = "stress") +
     coord_fixed() +
     expand_limits(x = c(-3, 3)) +
@@ -48,49 +60,53 @@ GenerateGraphNetwork <- function(Datafile) {
     geom_node_point(shape = "circle filled", fill = "white") +
     geom_node_text(aes(label = name), hjust = "outward", check_overlap = TRUE) +
     guides(edge_alpha = FALSE)
-  }
-GenerateFigure <-  {
+}
+GenerateFigure <- {
   # Generating strength of the terms
   strengths <- strength(g)
-  
+
   data.frame(term = names(strengths), strength = strengths, row.names = NULL) %>%
     mutate(rank = rank(strength, ties.method = "min")) %>%
     arrange(strength) ->
-    term_strengths
-  
-  cutoff_fig <- ggplot(term_strengths, aes(x = rank, y = strength,
-                                           label = term)) +
+  term_strengths
+
+  cutoff_fig <- ggplot(term_strengths, aes(
+    x = rank, y = strength,
+    label = term
+  )) +
     geom_line() +
     geom_point() +
-    geom_text(data = filter(term_strengths, rank > 5), hjust = "right",
-              nudge_y = 20, check_overlap = TRUE)
-  
+    geom_text(
+      data = filter(term_strengths, rank > 5), hjust = "right",
+      nudge_y = 20, check_overlap = TRUE
+    )
+
   cutoff_fig
-  
+
   # Finding the cutoff point
   cutoff_cum <- find_cutoff(g, method = "cumulative", percent = 0.8)
-  
+
   cutoff_cum
-  
+
   cutoff_fig +
     geom_hline(yintercept = cutoff_cum, linetype = "dashed")
-  
+
   get_keywords(reduce_graph(g, cutoff_cum))
-  
+
   # Change points
   cutoff_change <- find_cutoff(g, method = "changepoint", knot_num = 3)
-  
+
   cutoff_change
-  
+
   cutoff_fig +
     geom_hline(yintercept = cutoff_change, linetype = "dashed")
 }
 
 
 
-#Load the results first
+# Load the results first
 naive_results <- import_results(file = "data/raw/DynTreatReg.bib")
-#Using the functions
+# Using the functions
 GenerateKeywords(naive_results)
 GenerateGraphNetwork(naive_results)
 GenerateFigure
@@ -101,7 +117,7 @@ selected_terms <- get_keywords(g_redux)
 
 selected_terms
 
-# It is suggested to group the terms into groups
+# Terms needs to be grouped otherwise the search will be wrong
 grouped_terms <- list(
   DynamicTreatment = selected_terms[c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)]
 )
