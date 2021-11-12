@@ -7,6 +7,10 @@ Rapid Automatic Keyword Extraction Algorithm to search for additional keywords i
 The previous code has been rewritten into functions for easier general reproduction.
 
 ## Installation
+
+Prerequisites
+ - RStudio Version 1.3.1093
+
 The packages needed for the project to work is the following:
  - install.packages("tidyverse")
  - install.packages("dplyr") 
