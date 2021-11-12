@@ -7,35 +7,20 @@ Rapid Automatic Keyword Extraction Algorithm to search for additional keywords i
 The previous code has been rewritten into functions for easier general reproduction.
 
 ## Installation
+The packages needed for the project to work is the following:
+ - install.packages("tidyverse")
+ - install.packages("dplyr") 
+ - install.packages("ggplot2") 
+ - install.packages("ggraph") 
+ - install.packages("igraph") 
+ - install.packages("readr") 
+ - install.packages("devtools") 
+ - install.packages("litsearchr") 
+ - install.packages("lintr") 
+ - install.packages("docstring") 
 
-
-- PG = project-generated
-- HW = human-writable
-- RO = read only
-```
-.
-+-- .gitignore
-+-- CITATION.md
-+-- LICENSE.md
-+-- README.md
-+-- requirements.txt
-+-- bin                <- Compiled and external code, ignored by git (PG)
-¦   +-- external       <- Any external source code, ignored by git (RO)
-+-- config             <- Configuration files (HW)
-+-- data               <- All project data, ignored by git
-¦   +-- processed      <- The final, canonical data sets for modeling. (PG)
-¦   +-- raw            <- The original, immutable data dump. (RO)
-¦   +-- temp           <- Intermediate data that has been transformed. (PG)
-+-- docs               <- Documentation notebook for users (HW)
-¦   +-- manuscript     <- Manuscript source, e.g., LaTeX, Markdown, etc. (HW)
-¦   +-- reports        <- Other project reports and notebooks (e.g. Jupyter, .Rmd) (HW)
-+-- results
-¦   +-- figures        <- Figures for the manuscript or reports (PG)
-¦   +-- output         <- Other output for the manuscript or reports (PG)
-+-- src                <- Source code for this project (HW)
-
-```
-
+## Reference
+This project is based on the project https://elizagrames.github.io/litsearchr/
 
 ## License
 
