@@ -19,6 +19,9 @@ The packages needed for the project to work is the following:
  - install.packages("lintr") 
  - install.packages("docstring") 
 
+To use the project, the user can clone the project with git clone. 
+The main script is located in the file Literature Search Dynamic Treatment regime based on known articles.R
+
 ## Reference
 This project is based on the project https://elizagrames.github.io/litsearchr/
 
