@@ -1,4 +1,5 @@
 # Test Project - Finding keywords
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/DLiangUU/testrepo/main)
 ## Overview
 This test project is to generate keywords for a systematic review search. The code is based on the R Package Litsearchr.
 It is based on initially performing a naive search for articles and then followingly applying a
