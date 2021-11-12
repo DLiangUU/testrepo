@@ -3,6 +3,11 @@
 install.packages("lintr")
 install.packages("styler")
 install.packages("docstring")
+install.packages("renv")
+install.packages("conda")
+renv::init()
+renv::snapshot()
+renv::restore()
 
 library(tidyverse)
 library(dplyr)
